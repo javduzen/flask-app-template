@@ -16,7 +16,8 @@ class Config(object):
 	#RECAPTCHA_PRIVATE_KEY = "6LffFNwSAAAAAO7UURCGI7qQ811SOSZlgU69rvv7"
 
 class ProductionConfig(Config):
-	SQLALCHEMY_DATABASE_URI = 'mysql://user@localhost/foo'
+	#SQLALCHEMY_DATABASE_URI = 'mysql://root:''@localhost/test'
+	SQLALCHEMY_DATABASE_URI ='mysql://root:''@localhost/test'
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class DevelopmentConfig(Config):

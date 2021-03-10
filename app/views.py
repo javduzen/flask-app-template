@@ -1,8 +1,8 @@
 from flask import url_for, redirect, render_template, flash, g, session
 from flask_login import login_user, logout_user, current_user, login_required
-from app import app, lm
+from app import app, lm, db
 from app.forms import ExampleForm, LoginForm
-from app.models import User
+from app.models import User, ModelExample
 
 
 @app.route('/')
@@ -14,25 +14,30 @@ def index():
 def posts():
 	return render_template('list.html')
 
-
+#a basic form
 @app.route('/new/')
-@login_required
+#@login_required
 def new():
 	form = ExampleForm()
+
 	return render_template('new.html', form=form)
 
 
 @app.route('/save/', methods = ['GET','POST'])
-@login_required
+#@login_required
 def save():
 	form = ExampleForm()
 	if form.validate_on_submit():
-		print("salvando os dados:")
-		print(form.title.data)
-		print(form.content.data)
-		print(form.date.data)
-		flash('Dados salvos!')
+		print("saving data:")
+		title = form.title.data
+		content = form.content.data
+		new_data = ModelExample(title=title, content=content)
+		db.session.add(new_data)
+		db.session.commit()
+		flash('Load successfull')
+		return redirect(url_for('index'))
 	return render_template('new.html', form=form)
+
 
 @app.route('/view/<id>/')
 def view(id):

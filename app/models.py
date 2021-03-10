@@ -1,10 +1,15 @@
 from app import db
 
 class ModelExample(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String(250))
-	content = db.Column(db.Text)
-	date = db.Column(db.DateTime)
+    def __init__(self, title, content):
+        self.title=title
+        self.content=content
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    content = db.Column(db.Text)
+	#date = db.Column(db.DateTime)
+
 
 
 class User(db.Model):
